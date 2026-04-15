@@ -795,24 +795,21 @@ footer .inner{
            <div class="divider"></div>
     </div>
 
-    <article class="mit-card cast-card steve-card">
-  <div class="media">
-    <img src="Steve1.JPG" alt="Steve Anderson">
+  <article class="mit-card cast-card steve-card">
+    <div class="media steve-media">
+      <img src="Steve1.JPG" alt="Steve Anderson">
   </div>
-  <div class="media steve-media">
-    <img src="Steve1.JPG" alt="Steve Anderson" style="width:100%; height:100%; object-fit:contain; display:block;">
-      </div>
-      <div class="content">
-        <div class="role">He</div>
-        <h3 class="person">Steve Anderson</h3>
-        <div class="bio-text">Steve earned his MFA in Acting from Brandeis University in 1991 and has been training/coaching actors for 32 years.  He's performed Off Broadway and in Regional Theatre, starred in the international feature film THE WALL and as Bob in SILENCE OF WAVES. He's directed short films (THE SECRET LIVES OF TEACHERS, 42 SECONDS, ROOM 107) & features (LUCKY U RANCH).  Steve also launched "Teen Street Films," an actor training & film performance program for teens, which he directed for 12 seasons. </div>
-        <div class="stitch-line"></div>
-        <div class="links-row">
-          <a class="imdb" href="https://imdb.me/steveanderson" target="_blank" rel="noopener noreferrer">IMDb</a>
-          <div class="thread-mark">control</div>
-        </div>
-       </div>
-    </article>
+  <div class="content">
+    <div class="role">He</div>
+    <h3 class="person">Steve Anderson</h3>
+    <div class="bio-text">Steve earned his MFA in Acting from Brandeis University in 1991 and has been training/coaching actors for 32 years. He's performed Off Broadway and in Regional Theatre, starred in the international feature film THE WALL and as Bob in SILENCE OF WAVES. He's directed short films (THE SECRET LIVES OF TEACHERS, 42 SECONDS, ROOM 107) & features (LUCKY U RANCH). Steve also launched "Teen Street Films," an actor training & film performance program for teens, which he directed for 12 seasons.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://imdb.me/steveanderson" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">control</div>
+    </div>
+  </div>
+</article>
 
     <div class="card-grid-two">
       <article class="mit-card">
