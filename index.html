@@ -322,10 +322,24 @@ h3.name{margin:16px 0 0;font-size:clamp(36px,4vw,52px);font-weight:300}
 .boutin-media:hover img{
   transform:scale(1.02);
 }
-.media.steve-media{
-  height:400px;
+.steve-card{
+  max-width:980px;
+  width:100%;
+  margin:0 auto 36px;
 }
-
+.steve-card .media{
+  height:360px !important;
+  overflow:visible !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.steve-card .media img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
 .media::before,.media::after{
   content:"";
   position:absolute;
@@ -785,8 +799,7 @@ footer .inner{
       <div class="media">
         <div class="media steve-media">
   <div class="media steve-media">
-    <img src="Steve1.JPG" alt="Steve Anderson"
-       style="width:70%; height:auto; display:block; margin:0 auto;">
+    <img src="Steve1.JPG" alt="Steve Anderson" style="width:100%; height:100%; object-fit:contain; display:block;">
       </div>
       <div class="content">
         <div class="role">He</div>
