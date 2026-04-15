@@ -323,18 +323,20 @@ h3.name{margin:16px 0 0;font-size:clamp(36px,4vw,52px);font-weight:300}
   transform:scale(1.02);
 }
 .steve-card{
-  max-width:980px;
+  max-width:1100px;
   width:100%;
   margin:0 auto 36px;
 }
-.steve-card .media{
-  height:360px !important;
-  overflow:visible !important;
+
+.steve-card .steve-media{
+  height:420px !important;
+  overflow:hidden !important;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.steve-card .media img{
+
+.steve-card .steve-media img{
   width:100%;
   height:100%;
   object-fit:contain;
@@ -795,9 +797,9 @@ footer .inner{
            <div class="divider"></div>
     </div>
 
-  <article class="mit-card cast-card steve-card">
-    <div class="media steve-media">
-      <img src="Steve1.JPG" alt="Steve Anderson">
+<article class="mit-card cast-card steve-card">
+  <div class="media steve-media">
+    <img src="Steve1.JPG" alt="Steve Anderson">
   </div>
   <div class="content">
     <div class="role">He</div>
