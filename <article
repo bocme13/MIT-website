@@ -795,9 +795,10 @@ footer .inner{
            <div class="divider"></div>
     </div>
 
-    <article class="mit-card featured">
-      <div class="media">
-        <div class="media steve-media">
+    <article class="mit-card cast-card steve-card">
+  <div class="media">
+    <img src="Steve1.JPG" alt="Steve Anderson">
+  </div>
   <div class="media steve-media">
     <img src="Steve1.JPG" alt="Steve Anderson" style="width:100%; height:100%; object-fit:contain; display:block;">
       </div>
