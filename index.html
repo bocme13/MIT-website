@@ -322,10 +322,9 @@ h3.name{margin:16px 0 0;font-size:clamp(36px,4vw,52px);font-weight:300}
 .boutin-media:hover img{
   transform:scale(1.02);
 }
-
-.steve-media{
-  height:auto;
-  overflow:visible;
+.media.steve-media{
+  height:auto !important;
+  overflow:visible !important;
 }
 
 .media::before,.media::after{
@@ -786,7 +785,9 @@ footer .inner{
     <article class="mit-card featured">
       <div class="media">
         <div class="media steve-media">
-  <img src="Steve1.JPG" alt="Steve Anderson" style="width:70%; height:auto; display:block; margin:0 auto;">
+  <div class="media steve-media">
+    <img src="Steve1.JPG" alt="Steve Anderson"
+       style="width:70%; height:auto; display:block; margin:0 auto;">
       </div>
       <div class="content">
         <div class="role">He</div>
