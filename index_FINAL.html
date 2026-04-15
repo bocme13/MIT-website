@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Measured in Thread — Site Preview with BTS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;
+  --panel:#0d0d0d;
+  --panel-2:#111;
+  --text:#f2eee9;
+  --muted:#b8afa6;
+  --line:rgba(255,255,255,.10);
+  --stitch:rgba(255,255,255,.16);
+  --red:#7d1d22;
+  --red-soft:rgba(125,29,34,.45);
+  --shadow:0 18px 40px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top, rgba(125,29,34,.08), transparent 24%),
+    linear-gradient(180deg,#090909 0%, #040404 100%);
+  color:var(--text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(12,12,12,.88);
+  backdrop-filter:blur(12px);
+}
+.nav{
+  max-width:1280px;
+  margin:0 auto;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.brand{
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.35em;
+  color:#eee7e0;
+}
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+}
+.links a{
+  color:#d4d4d8;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.links a:hover{color:#fff}
+section{border-bottom:1px solid rgba(255,255,255,.06)}
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:64px 24px 72px;
+}
+.poster-wrap{
+  display:flex;
+  justify-content:center;
+  padding:24px 24px 0;
+}
+.poster{
+  width:min(100%, 760px);
+  min-height:620px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow);
+  background:
+    linear-gradient(180deg, rgba(125,29,34,.12), transparent 25%),
+    linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#8f8680;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  position:relative;
+  overflow:hidden;
+}
+.poster::before, .poster::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.08);
+}
+.poster::before{width:68%;height:1px}
+.poster::after{width:1px;height:56%}
+.hero-copy{
+  max-width:42rem;
+  margin:-10px auto 0;
+  padding:34px 24px 64px;
+  text-align:center;
+}
+.headline{
+  margin:0;
+  font-size:clamp(40px,6vw,72px);
+  font-weight:300;
+  font-style:italic;
+  color:#7a1414;
+  text-shadow:0 0 18px rgba(122,20,20,.45);
+  letter-spacing:-.01em;
+  line-height:1.05;
+}
+.sub{
+  margin:8px 0 0;
+  font-size:clamp(24px,3vw,34px);
+  font-style:italic;
+  color:#8e2a2a;
+  text-shadow:0 0 14px rgba(122,20,20,.35);
+}
+.laurels{
+  min-height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed rgba(255,255,255,.1);
+  border-radius:18px;
+  color:#8c827a;
+  font-size:14px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,.015);
+}
+.section-head{
+  text-align:center;
+  margin:0 auto 40px;
+  max-width:760px;
+}
+.eyebrow{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.35em;
+  font-size:.72rem;
+  margin-bottom:10px;
+}
+h2.title{
+  margin:0;
+  font-size:clamp(2.1rem,4vw,3.5rem);
+  letter-spacing:.12em;
+  font-weight:500;
+}
+.section-copy{
+  margin:16px auto 0;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:660px;
+  font-size:1rem;
+}
+.divider{
+  position:relative;
+  width:min(360px, 70%);
+  height:18px;
+  margin:24px auto 0;
+}
+.divider::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:50%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--red-soft) 20%, var(--red) 50%, var(--red-soft) 80%, transparent);
+  transform:translateY(-50%);
+}
+.divider::after{
+  content:"• • • • • • •";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  letter-spacing:.42em;
+  color:var(--stitch);
+  font-size:.62rem;
+  background:linear-gradient(180deg, transparent 42%, rgba(5,5,5,.92) 42%, rgba(5,5,5,.92) 58%, transparent 58%);
+}
+.director-grid{
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:34px;
+  align-items:stretch;
+}
+.photo-card, .card, .bio-card, .contact-card{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(20,20,20,.78);
+  box-shadow:var(--shadow);
+}
+.photo-card{
+  overflow:hidden;
+  min-height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(180deg, rgba(125,29,34,.16), transparent 28%),
+    linear-gradient(135deg, #161616 0%, #0e0e0e 100%);
+  color:#8f8680;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  position:relative;
+}
+.photo-card::before,.photo-card::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.08);
+}
+.photo-card::before{width:68%;height:1px}
+.photo-card::after{width:1px;height:52%}
+.card{padding:34px 40px;text-align:center}
+h3.name{margin:16px 0 0;font-size:clamp(36px,4vw,52px);font-weight:300}
+.statement{
+  margin:24px auto 0;
+  max-width:48rem;
+  color:#d4d4d8;
+  font-size:18px;
+  line-height:1.8;
+}
+.statement p{margin:0 0 24px}
+.statement .lead{
+  color:#fff;
+  font-style:italic;
+  font-size:clamp(22px,2.5vw,32px);
+  font-weight:500;
+}
+.bio-wrap{margin-top:34px}
+.bio-card{padding:32px 40px;text-align:center}
+.bio{
+  max-width:48rem;
+  margin:0 auto;
+  color:#a1a1aa;
+  font-size:16px;
+  line-height:1.8;
+}
+.bio p{margin:0 0 22px}
+.card-grid-two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  max-width:900px;
+  margin:0 auto;
+}
+.mit-card{
+  position:relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.015), transparent 14%),
+    linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .25s ease, border-color .25s ease;
+}
+.mit-card:hover{transform:translateY(-4px);border-color:rgba(125,29,34,.55)}
+.mit-card::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg, transparent, var(--red) 18%, #9a2a31 50%, var(--red) 82%, transparent);
+}
+.mit-card::after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px dashed rgba(255,255,255,.06);
+  border-radius:12px;
+  pointer-events:none;
+}
+.media{
+  position:relative;
+  height:275px;
+  overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:
+    linear-gradient(180deg, rgba(125,29,34,.18), transparent 44%),
+    linear-gradient(135deg, #161616 0%, #0e0e0e 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#8f8680;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:.76rem;
+}
+
+.media.duo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  height:320px;
+  }
+
+.boutin-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.bert-img{
+  object-position:center 50%;
+}
+
+.trina-img{
+  object-position:center 25%;
+}
+
+.boutin-media:hover img{
+  transform:scale(1.02);
+}
+
+
+
+.media::before,.media::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.08);
+}
+.media::before{width:72%;height:1px}
+.media::after{width:1px;height:62%}
+.content{padding:20px 20px 18px;text-align:center}
+.role{
+  color:#d9cbc3;
+  font-size:.8rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin:0 0 8px;
+}
+.person{margin:0;font-size:1.45rem;font-weight:500}
+.bio-text{
+  margin:14px 0 16px;
+  color:var(--muted);
+  line-height:1.65;
+  font-size:.98rem;
+  min-height:92px;
+}
+.stitch-line{
+  position:relative;
+  height:18px;
+  margin:2px 0 14px;
+}
+.stitch-line::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:50%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.14) 12%, rgba(255,255,255,.14) 88%, transparent);
+  transform:translateY(-50%);
+}
+.stitch-line::after{
+  content:"• • • • • •";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  letter-spacing:.32em;
+  color:rgba(255,255,255,.17);
+  font-size:.56rem;
+  background:linear-gradient(180deg, transparent 42%, rgba(15,15,15,.96) 42%, rgba(15,15,15,.96) 58%, transparent 58%);
+}
+.links-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.imdb{
+  color:#efe7df;
+  text-decoration:none;
+  font-size:.82rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(125,29,34,.6);
+  padding-bottom:2px;
+}
+.imdb:hover{color:#fff;border-bottom-color:#b2363d}
+.thread-mark{
+  color:rgba(210,72,80,.9);
+  font-size:.78rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.crew-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 320px));
+  justify-content:center;
+  gap:28px;
+}
+.sammie-card{
+  grid-column:1 / -1;
+  justify-self:center;
+  width:100%;
+  max-width:320px;
+}
+.center-card{
+  margin-left:auto;
+  margin-right:auto;
+}
+.featured .card{
+  padding:24px 28px;
+}
+
+.featured-wide{
+  grid-column:1 / -1;
+  width:100%;
+  max-width:720px;
+  margin:0 auto;
+}
+
+.boutin-logo{
+  display:block;
+  width:100%;
+  max-width:420px;
+  margin:12px auto 18px;
+}
+
+/* BTS */
+.bts-hero{
+  max-width:980px;
+  margin:0 auto 34px;
+}
+.bts-grid{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:28px;
+  align-items:stretch;
+}
+.bts-side{
+  display:grid;
+  gap:28px;
+}
+.bts-large .media{height:420px}
+.bts-small .media{height:196px}
+.video-card .media{
+  height:220px;
+  background:
+    linear-gradient(180deg, rgba(125,29,34,.18), transparent 44%),
+    linear-gradient(135deg, #181818 0%, #0d0d0d 100%);
+}
+.play-badge{
+  position:absolute;
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 0 10px rgba(125,29,34,.08);
+}
+.play-badge::before{
+  content:"";
+  margin-left:5px;
+  border-left:20px solid #f2eee9;
+  border-top:12px solid transparent;
+  border-bottom:12px solid transparent;
+}
+.caption{
+  color:#a79c94;
+  font-size:.92rem;
+  line-height:1.6;
+  margin-top:10px;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:28px;
+}
+.gallery-grid .media{height:235px}
+.note-card{
+  margin-top:30px;
+  padding:26px 28px;
+  text-align:center;
+}
+.note-card p{
+  margin:0;
+  color:#b8afa6;
+  line-height:1.75;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr .9fr;
+  gap:32px;
+}
+.contact-card{padding:32px 40px}
+.contact-card.main{background:rgba(20,20,20,.78)}
+.contact-card.side{background:#171717}
+.contact-card h4{margin:0;font-size:34px;font-weight:300}
+.contact-card .contact-tagline{
+  color:#a94444;
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-style:italic;
+  font-size:20px;
+  letter-spacing:.04em;
+  text-align:right;
+  margin-top:28px;
+  opacity:.9;
+}
+.meta-label{text-transform:uppercase;letter-spacing:.3em;color:#71717a;font-size:12px}
+.meta-value{margin-top:10px;font-size:20px;color:#f2eee9}
+footer{
+  border-top:1px solid rgba(255,255,255,.08);
+  background:rgba(15,15,15,.95);
+  
+}
+footer .inner{
+  max-width:1280px;
+  margin:0 auto;
+  padding:24px;
+  text-align:center;
+  color:#71717a;
+  font-size:14px;
+  letter-spacing:.06em;
+}
+@media (max-width: 980px){
+  .links{display:none}
+  .director-grid, .card-grid-two, .contact-grid, .bts-grid, .gallery-grid{grid-template-columns:1fr}
+  .photo-card{min-height:420px}
+  .featured{max-width:none}
+}
+
+.social{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.social a{
+  color:#d4d4d8;
+  text-decoration:none;
+  font-size:12px;
+  border:1px solid rgba(255,255,255,.15);
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  transition:.2s;
+}
+.social a:hover{
+  color:#a94444;
+  border-color:#a94444;
+  box-shadow:0 0 6px rgba(169,68,68,.4);
+}
+.x-handle{
+  position:relative;
+  left:9px;
+}
+.contact-social-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.contact-social-item a{
+  color:#d4d4d8;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.contact-social-item a:hover{
+  color:#a94444;
+}
+
+.contact-social-item span{
+  color:#f2eee9;
+}
+/* Placeholder Blur Effect */
+.placeholder-blur{
+  position:relative;
+  overflow:hidden;
+}
+
+.placeholder-blur > *:not(.stamp){
+  filter:blur(3px);
+  opacity:.45;
+  transform:scale(1.02);
+}
+
+.placeholder-blur::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(5,5,5,.28);
+  pointer-events:none;
+}
+
+/* Coming Soon Stamp */
+.stamp{
+  position:absolute;
+  top:36px;
+  right:36px;
+  transform:rotate(16deg);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-size:40px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(125,29,34,.92);
+  border:2px solid rgba(125,29,34,.7);
+  padding:10px 16px;
+  background:rgba(0,0,0,.12);
+  box-shadow:0 0 18px rgba(125,29,34,.18);
+  z-index:2;
+}
+/* Blur entire BTS section */
+/* Blur BTS content, but keep header sharp */
+.bts-blur{
+  position:relative;
+}
+
+.bts-blur .bts-hero,
+.bts-blur .bts-grid,
+.bts-blur .gallery-grid,
+.bts-blur .note-card,
+.bts-blur .wrap > div[style="height:28px"]{
+  filter:blur(3px);
+  opacity:.55;
+}
+
+.bts-blur::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:180px;
+  bottom:0;
+  background:rgba(5,5,5,.18);
+  pointer-events:none;
+}
+.contact-tagline{
+  color:#7a1414;
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-style:italic;
+  font-size:20px;
+  letter-spacing:.04em;
+}
+.bts-gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:20px;
+  margin-top:30px;
+}
+
+.bts-gallery img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  background:#111;
+}
+
+/* for the slate so text doesn't get cropped */
+.bts-contain{
+  object-fit:contain !important;
+  background:#111;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">Measured in Thread</div>
+    <nav class="links">
+      <a href="#home">Home</a>
+      <a href="#director">Director</a>
+      <a href="#cast">Cast</a>
+      <a href="#crew">Crew</a>
+      <a href="#bts">Behind the Scenes</a>
+      <a href="#press">Press</a>
+      <a href="#festivals">Festivals</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  
+
+<div class="social">
+ <a href="https://www.facebook.com/groups/1402962954643116" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.3v-2.9h2.3V9.6c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.4v1.7h2.4l-.4 2.9h-2v7A10 10 0 0022 12z"/>
+  </svg>
+</a>
+  <a href="https://instagram.com/measured_in_thread" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 2 .3 2.5.5.6.2 1 .5 1.5 1s.8.9 1 1.5c.2.5.4 1.3.5 2.5.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.5-.2.6-.5 1-1 1.5s-.9.8-1.5 1c-.5.2-1.3.4-2.5.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.3-2.5-.5-.6-.2-1-.5-1.5-1s-.8-.9-1-1.5c-.2-.5-.4-1.3-.5-2.5C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .5-2.5.2-.6.5-1 1-1.5s.9-.8 1.5-1c.5-.2 1.3-.4 2.5-.5C8.4 2.2 8.8 2.2 12 2.2zm0 3.1a6.7 6.7 0 100 13.4 6.7 6.7 0 000-13.4zm0 11.1a4.4 4.4 0 110-8.8 4.4 4.4 0 010 8.8zm5.4-11.7a1.6 1.6 0 110 3.2 1.6 1.6 0 010-3.2z"/>
+  </svg>
+</a>
+  <a href="https://x.com/MThread24316" target="_blank" rel="noopener noreferrer" title="X" aria-label="X">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.9 2H21l-6.6 7.5L22 22h-6.9l-5.4-7.1L3.4 22H1.3l7.1-8L2 2h7l4.9 6.5L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z"/>
+    </svg>
+  </a>
+</div>
+
+
+  </div>
+</header>
+
+<main>
+  <section id="home">
+    <div class="poster-wrap">
+      <div class="poster">
+  <img src="poster.png" alt="Measured in Thread Poster" style="width:100%; height:100%; object-fit:contain; background:black;">
+</div>
+    </div>
+    <div class="hero-copy">
+      <h1 class="headline">Every word leaves a mark…</h1>
+      <p class="sub">when language and needle intertwine</p>
+      </div>
+  </section>
+
+  <section id="director">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Director</div>
+        <h2 class="title">Brian O’Connor</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="director-grid">
+        <div class="photo-card">
+  <img src="Brian jacket.jpeg" alt="Brian O’Connor" style="width:100%; height:100%; object-fit:cover;">
+</div>
+        <div class="card">
+          <div class="eyebrow">Director Statement</div>
+          
+          <div class="statement">
+            <p class="lead">Measured in Thread is horror stripped to its essence: intimacy, control and violation.</p>
+            <p>No spectacle. No jump scares. Only the slow unraveling of safety into sterility. Comfort into captivity.</p>
+            <p>The story lives in the victim’s gaze as language meets needle. Poetry not as beauty but domination. Terror not shouted but whispered.</p>
+            <p>It’s a meditation on vulnerability, the weaponization of language and the haunting thin line between care and cruelty. Of how ideas once relegated to the fringes of society have become our new normal, even as they maim and demean us.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-wrap">
+        <div class="bio-card">
+          <div class="eyebrow">Bio</div>
+          <div class="bio">
+
+            <p>Brian grew up loving character driven films like All the President's Men and The Magnificent Seven. He writes stories with human stakes in which ordinary people do extraordinary things.</p>
+           <p>At the same time, he directs and produces short films that have been viewed over 500,000 times online and played at festivals worldwide.</p>
+           <p>He used to sell Cheerios.</p>
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <section id="cast">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Measured in Thread</div>
+      <h2 class="title">Cast</h2>
+           <div class="divider"></div>
+    </div>
+
+    <article class="mit-card featured">
+      <div class="media">
+        <img src="Steve.jpg" alt="Steve Anderson" style="width:60%; height:100%; object-fit:cover;">
+      </div>
+      <div class="content">
+        <div class="role">He</div>
+        <h3 class="person">Steve Anderson</h3>
+        <div class="bio-text">Steve earned his MFA in Acting from Brandeis University in 1991 and has been training/coaching actors for 32 years.  He's performed Off Broadway and in Regional Theatre, starred in the international feature film THE WALL and as Bob in SILENCE OF WAVES. He's directed short films (THE SECRET LIVES OF TEACHERS, 42 SECONDS, ROOM 107) & features (LUCKY U RANCH).  Steve also launched "Teen Street Films," an actor training & film performance program for teens, which he directed for 12 seasons. </div>
+        <div class="stitch-line"></div>
+        <div class="links-row">
+          <a class="imdb" href="https://imdb.me/steveanderson" target="_blank" rel="noopener noreferrer">IMDb</a>
+          <div class="thread-mark">control</div>
+        </div>
+       </div>
+    </article>
+
+    <div class="card-grid-two">
+      <article class="mit-card">
+        <div class="media">
+          <img src="brianna.png" alt="Brianna Oppenheimer" style="width:100%; height:100%; object-fit:cover; object-position:center 1%;">
+        </div>
+        <div class="content">
+          <div class="role">I (Voice)</div>
+          <h3 class="person">Brianna Oppenheimer</h3>
+          <div class="bio-text">Brianna Oppenheimer is a captivating actress known for her magnetic presence and emotionally resonant performances. With a performance that is both powerful and haunting, she brings a unique depth to her work, commanding attention from on and off screen. A dual citizen of the USA and Germany with this global perspective, Brianna is an emerging force in film and television, recognized for her versatility and undeniable star quality. </div>
+          <div class="stitch-line"></div>
+          <div class="links-row">
+            <a class="imdb" href="https://imdb.me/briannaopp" target="_blank" rel="noopener noreferrer">IMDb</a>
+            <div class="thread-mark">voice</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="mit-card">
+        <div class="media">
+          <img src="Monique.jpg" alt="Monique Michelle" style="width:100%; height:100%; object-fit:cover; object-position:center 10%;">
+        </div>
+        <div class="content">
+          <div class="role">I (Onscreen)</div>
+          <h3 class="person">Monique Michelle</h3>
+          <div class="bio-text">I’m an actress drawn to psychologically complex, character-driven stories that explore the darker edges of human behavior. In Measured in Thread, I portray a woman held captive whose experience evolves in unsettling and unexpected ways, challenging ideas of identity, control, and transformation. I am driven by bold, emotionally intense stories that leave a lasting impression</div>
+          <div class="stitch-line"></div>
+          <div class="links-row">
+            <a class="imdb" href="https://imdb.me/moniquemichelle" target="_blank" rel="noopener noreferrer">IMDb</a>
+            <div class="thread-mark">body</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+  <section id="crew">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Measured in Thread</div>
+        <h2 class="title">Crew</h2>
+            <div class="divider"></div>
+      </div>
+
+
+      <div class="crew-grid">
+<article class="mit-card">
+  <div class="media">
+    <img src="byron.jpg" alt="Byron Werner" style="width:100%; height:100%; object-fit:cover; object-position:center 50%;">
+  </div>
+  <div class="content">
+    <div class="role">Director of Photography</div>
+    <h3 class="person">Byron Werner</h3>
+    <div class="bio-text">Byron is a Los Angeles-based Director of Photography with more than 25 years in the film industry. His extensive portfolio features an array of projects, including 30 feature films, 50 short films, 100 music videos, and over 100 commercials which inclues collaborations with Samuel L. Jackson, William Hurt, Sean Penn and Dustin Hoffman among others.
+</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://pro.imdb.com/name/nm0004586/?ref_=nmovr_ov_shr" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">frame</div>
+    </div>
+  </div>
+</article>
+        <article class="mit-card">
+  <div class="media">
+    <img src="jeff.jpg" alt="Jeff Lane" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">1st Assistant Director</div>
+    <h3 class="person">Jeff Lane</h3>
+    <div class="bio-text">Jeff Lane is an accomplished film director, producer, screenwriter and actor with a diverse background spanning military, law enforcement and as a college adjunct. With a keen eye for storytelling, he's directed over 14 award-winning films and is thankful to add MEASURED IN THREAD to his list as assistant director.
+
+          </div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://imdb.me/JeffLane" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">pace</div>
+    </div>
+  </div>
+</article>
+        
+        <article class="mit-card">
+  <div class="media">
+    <img src="alexander.jpg" alt="Alexander Nunn" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">Lighting Director</div>
+    <h3 class="person">Alexander Nunn</h3>
+    <div class="bio-text">Alexander was the man who made everyone look good on set through.  In addition to his lighting prowess, he's also an actor (https://alexandernunn.myportfolio.com/compiled-acting-reel) and stunt person (https://youtu.be/k7P37pQ7dHE).</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm12867112/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">glow</div>
+    </div>
+  </div>
+</article>
+        <article class="mit-card">
+  <div class="media">
+    <img src="jeffrey.jpg" alt="Jeffrey Hack" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">Sound</div>
+    <h3 class="person">Jeffrey Hack</h3>
+    <div class="bio-text">Jeffrey worked on the production of "Measured In Thread" as the Production Sound Mixer and Boom Operator. His background includes acting for both the stage and camera, singing, recording music, and directing. As a side gig, he actively creates video content for his YouTube channels where he reacts to and analyzes music as well as provides professional insight on the filmmaking process.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm11303542/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">hush</div>
+    </div>
+  </div>
+</article>
+     <article class="mit-card">
+  <div class="media">
+    <img src="rob.jpg" alt="Rob Cobasky" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">SFX / Makeup</div>
+    <h3 class="person">Rob Cobasky</h3>
+    <div class="bio-text">Sculpture Artist, multi award winning SFX artist, character designer, freelance artist and monster maker extraordinaire.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm6835125/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">mark</div>
+    </div>
+  </div>
+</article>
+<article class="mit-card">
+  <div class="media">
+    <img src="ANGELO LOPES.JPG" alt="Angelo Lopes" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">VFX / Editor</div>
+    <h3 class="person">Angelo Lopes</h3>
+    <div class="bio-text">Angelo Lopes is a writer and filmmaker who grew up watching movies, notably science fiction films with practical effects, which became his main inspiration.  He also has a background in shooting and editing television news. </div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm2215406/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">cut</div>
+    </div>
+  </div>
+</article>
+        <article class="mit-card">
+  <div class="media">
+    <img src="Kim.jpg" alt="Kim Rezik" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+      <div class="content">
+    <div class="role">Production Assistant</div>
+    <h3 class="person">Kim Rezik</h3>
+    <div class="bio-text">Kim was the Production Assistant, AC and Craft Services Assistant on Measured in Thread and happy to be working again with so many of the talented cast and crew involved.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm17487701/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">lift</div>
+    </div>
+  </div>
+</article>
+<article class="mit-card">
+  <div class="media">
+    <img src="Marcus.jpg" alt="Marcus Besch" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">Production Assistant</div>
+    <h3 class="person">Marcus Besch</h3>
+    <div class="bio-text">Originally from Kansas City and a former Marine, Marcus is currently in film school at Glendale Community College and an aspiring actor and filmmaker.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://pro.imdb.com/name/nm18395631/?ref_=nmovr_ov_shr" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">lift</div>
+    </div>
+  </div>
+</article>
+        <article class="mit-card">
+  <div class="media">
+    <img src="cariss.jpg" alt="Carissa Goble" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">Craft Services</div>
+    <h3 class="person">Carissa Goble</h3>
+    <div class="bio-text">Writer/producer/actor/artist with a focus on getting into film and TV, Carissa kept the crew grounded, fueled, and cared for as Craft Services director.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm13331548/" target="_blank" rel="noopener noreferrer">IMDb</a>
+      <div class="thread-mark">care</div>
+    </div>
+  </div>
+</article>
+        <article class="mit-card sammie-card">
+  <div class="media">
+    <img src="Sammie.jpeg" alt="Sammie O'Connor" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  </div>
+  <div class="content">
+    <div class="role">BTS Photographer</div>
+    <h3 class="person">Sammie O'Connor</h3>
+    <div class="bio-text">Sammie is a proud Indiana University alum who'll head to the University of Arizona in the fall for a Masters in Sustainability with a focus on Urban Planning.  Photography is a passion of hers and she's happy to supply the Behind the Scenes action.</div>
+    <div class="stitch-line"></div>
+    <div class="links-row">
+      <a class="imdb" href="https://www.linkedin.com/in/samanthaoco" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <div class="thread-mark">trace</div>
+    </div>
+  </div>
+</article>
+
+ <article class="mit-card featured-wide">
+  <div class="media duo boutin-media">
+  <img src="Bert copy.png">
+  <img src="Trina 3.jpeg">
+  
+</div>
+
+  <div class="content">
+    <div class="role">Production Design</div>
+    <h3 class="person">Bert & Trina Boutin</h3>
+        <div class="company-logo">
+
+  <img src="Trina Boutin - IMDb copy 2.jpeg" alt="Lemonade Acre" class="boutin-logo">
+</div>
+
+    <div class="bio-text" style="text-align:left">
+
+      <p><strong>Bert Boutin</strong> is a Prop Master, Armorer & co-founder of Lemonade Acre. His work lives in the details—small, tactile elements that ground the story in reality. On <em>Measured in Thread</em>, he developed the practical components that interact directly with the actor, ensuring each movement feels precise, safe, and believable. The effect is subtle by design—what’s happening is real, even when it feels impossible.</p>
+
+      <p><strong>Trina Boutin</strong> is a Production Designer & co-founder of Lemonade Acre. Her work is rooted in restraint, building environments that feel lived in, controlled and quietly unsettling. For <em>Measured in Thread</em>, she shaped a confined basement world where texture, light and negative space carry the tension as much as the performance. Every element is intentional, leaving just enough room for the audience to lean in.</p>
+
+      <p><strong>Together</strong>, Bert & Trina blend design, props and practical effects into a single, controlled language. On <em>Measured in Thread</em>, their collaboration centers on restraint and precision, where every detail is considered and nothing is accidental. The result is a world that feels intimate, grounded, and quietly tense—built to hold the performance without ever distracting from it.</p>
+
+    </div>
+
+    <div class="stitch-line"></div>
+
+    <div class="links-row">
+      <a class="imdb" href="https://www.imdb.com/name/nm5489008/" target="_blank">Trina IMDb</a>
+      <a class="imdb" href="https://www.imdb.com/name/nm17399907/" target="_blank">Bert IMDb</a>
+      <div class="thread-mark">design</div>
+    </div>
+  </div>
+</article>
+</article>
+      </div>
+    </div>
+  </section>
+   
+  <section id="bts" class="bts">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Measured in Thread</div>
+      <h2 class="title">Behind the Scenes</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="bts-gallery">
+      <img src="Day 1 slate copy.jpg" alt="Day 1 slate" class="bts-contain">
+      <img src="Day 1 set with haze copy.JPG" alt="Behind the scenes">
+      <img src="Window close up copy.JPG" alt="Production detail">
+      <img src="Day 1 set up getting closer copy.JPG" alt="On set">
+      <img src="Brian gives direction to Steve 2 copy.JPG" alt="Lighting setup">
+      <img src="Steve in action copy.JPG" alt="Crew at work">
+      <img src="Trays close up copy.JPG" alt="Production detail">
+      <img src="Jeff watches Steve on monitor copy.jpg" alt="Production detail">
+      <img src="Kim, Monique, Carissa & Jeff backstage copy.JPG" alt="Production detail">
+      <img src="Brian & Angelo look in monitor at Byron in chair copy.JPG" alt="Behind the scenes">
+      <img src="Trina & Bert hang mirror copy.JPG" alt="On set">
+      <img src="rob & Monique 2 copy.JPG" alt="Crew at work">
+      <img src="Jeffrey and Jeff chilling copy.JPG" alt="Production detail">
+      <img src="Alexander found a skateboard copy.JPG" alt="Production detail">
+      <img src="Angelo, Brian, Steve  & Byron copy.JPG" alt="Production detail">
+      <img src="Monique in green suit with kim copy.JPG" alt="Production detail">
+      <img src="Monique in chair in bg copy.JPG" alt="Lighting setup">
+      <img src="Jeff watches as Jeffrey mics Steve copy.JPG" alt="Production detail">
+      <img src="Bert set build day 2 copy.JPG" alt="Production detail">
+      <img src="Steve & Byron.jpg" alt="Production detail">
+      <img src="Camera teest day 2 2 copy.JPG" alt="Production detail">
+      <img src="Markus watches Rob work copy.JPG" alt="Production detail">
+      <img src="Brin & Trina.JPG" alt="Production detail">
+      <img src="Steve evil grin on set with Monique copy.JPG" alt="Production detail">
+      <img src="Red Velvet copy.JPG" alt="Production detail">
+      <img src="Steve & Monique between B & B copy.JPG" alt="Production detail">
+      <img src="Duchess in mirror in monitor copy.JPG" alt="Production detail">
+      <img src="Cast & crew pic 3 copy.JPG" alt="Production detail">
+
+
+    </div>
+  </div>
+</section>
+
+  <section id="press">
+  <div class="wrap placeholder-blur">
+
+    <div class="stamp">Threads Forming</div>
+      <div class="section-head">
+        <div class="eyebrow">Measured in Thread</div>
+        <h2 class="title">Press</h2>
+            <div class="divider"></div>
+      </div>
+     <div class="poster placeholder-blur" style="min-height:560px;">
+  <span>Poster Placeholder</span>
+  </div>
+    </div>
+  </section>
+
+  <section id="festivals">
+    <div class="wrap">
+      <div class="laurels"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Contact</div>
+        <h2 class="title">Get in Touch</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card main">
+          <h4>Measured in Thread</h4>
+          <p class="contact-tagline">A short film that just might linger in your mind long after it's finished...</p>
+          
+          
+        </div>
+        <div class="contact-card side">
+          <div class="meta-label">Email</div>
+          <div class="meta-value"><a href="mailto:boconnor13@gmail.com" style="color:#f2eee9; text-decoration:none;">boconnor13@gmail.com</a></div>
+          <div style="height:24px"></div>
+          <div class="meta-label">Socials</div>
+          <div style="height:18px"></div>
+<div class="meta-value">
+  <div class="social" style="justify-content:flex-start;">
+      <a href="https://www.facebook.com/groups/1402962954643116" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.3v-2.9h2.3V9.6c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.4v1.7h2.4l-.4 2.9h-2v7A10 10 0 0022 12z"/>
+      </svg>
+    </a>
+    
+
+    <span style="color:#f2eee9; font-size:14px; letter-spacing:.08em;">
+      Measured in Thread BTS
+    </span>
+
+  </div>
+</div>
+
+<div class="meta-value">
+  <div class="social" style="justify-content:flex-start;">
+    
+    <a href="https://instagram.com/measured_in_thread" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 2 .3 2.5.5.6.2 1 .5 1.5 1s.8.9 1 1.5c.2.5.4 1.3.5 2.5.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.5-.2.6-.5 1-1 1.5s-.9.8-1.5 1c-.5.2-1.3.4-2.5.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.3-2.5-.5-.6-.2-1-.5-1.5-1s-.8-.9-1-1.5c-.2-.5-.4-1.3-.5-2.5C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .5-2.5.2-.6.5-1 1-1.5s.9-.8 1.5-1c.5-.2 1.3-.4 2.5-.5C8.4 2.2 8.8 2.2 12 2.2z"/>
+      </svg>
+    </a>
+    
+
+    <span style="color:#f2eee9; font-size:14px; letter-spacing:.08em;">
+      @measured_in_thread
+    </span>
+    </div>
+ 
+
+
+</div>
+ <div class="contact-social-item">
+    <a href="https://x.com/MThread24316" target="_blank" rel="noopener noreferrer" title="X" aria-label="X" class="social-icon">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.9 2H21l-6.6 7.5L22 22h-6.9l-5.4-7.1L3.4 22H1.3l7.1-8L2 2h7l4.9 6.5L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z"/>
+    </svg>
+  </a>
+  <span>@MThread24316</span>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
