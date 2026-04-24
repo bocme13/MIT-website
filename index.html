@@ -458,6 +458,18 @@ h3.name{margin:16px 0 0;font-size:clamp(36px,4vw,52px);font-weight:300}
   width:100%;
   max-width:420px;
   margin:12px auto 18px;
+}  
+.crew-final-row{
+  grid-column:1 / -1;
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  flex-wrap:wrap;
+  width:100%;
+}
+
+.crew-final-row .mit-card{
+  width:320px;
 }
 
 /* BTS */
@@ -1015,7 +1027,8 @@ footer .inner{
   </div>
 </article>
         <article class="mit-card">
-  <div class="media">
+<div class="crew-final-row">
+          <div class="media">
     <img src="Cariss.JPG" alt="Carissa Goble" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
   </div>
   <div class="content">
@@ -1043,6 +1056,7 @@ footer .inner{
       <div class="thread-mark">trace</div>
     </div>
   </div>
+</div>
 </article>
 
  <article class="mit-card featured-wide">
