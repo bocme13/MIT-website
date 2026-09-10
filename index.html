@@ -126,16 +126,23 @@ section{border-bottom:1px solid rgba(255,255,255,.06)}
 }
 .laurels{
   min-height:120px;
-  display:flex;
-  align-items:center;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 220px));
   justify-content:center;
+  align-items:center;
+  gap:30px;
+  margin-top:30px;
+  padding:30px;
   border:1px dashed rgba(255,255,255,.1);
   border-radius:18px;
-  color:#8c827a;
-  font-size:14px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
   background:rgba(255,255,255,.015);
+}
+
+.laurels img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  display:block;
 }
 .section-head{
   text-align:center;
@@ -748,20 +755,6 @@ footer .inner{
 .bts-contain{
   object-fit:contain !important;
   background:#111;
-}
-.laurels{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(300px, 400px));
-  justify-content:center;
-  gap:30px;
-  margin-top:30px;
-}
-
-.laurels img{
-  width:100%;
-  height:auto;
-  object-fit:contain;
-  display:block;
 }
   
 </style>
